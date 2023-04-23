@@ -33,4 +33,5 @@ else:
         memory[i] = (struct.unpack("<Q",mem[8*i:8*i+8]))[0]
     for i,j in enumerate(memory):
         if j >= tar_st and j<= tar_end:
-            print(f"\n{hex(i*8 + addr_st)} : {hex(j)}")
+            print(f"\n{hex(i*8 + addr_st)} | {hex(j)}",end='')
+    print()
