@@ -14,7 +14,7 @@ else:
     res = res[res.find('Containing mapping:')+20:res.find('Offset')]
     res = res.split()
     x = -1
-    for i in range(res):
+    for i in range(len(res)):
         if '0x' in res[i]:
             x = i
             break
