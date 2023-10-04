@@ -1,5 +1,15 @@
 import gdb
 import struct
+
+def cut(s):
+    x = '0x'
+    for i in s[s.find('0x')+2:]:
+        if 0x30<=ord(i)<=0x39 or ord('a')<=ord(i)<=ord('f'):
+            x += i
+        else:
+            break
+    return x
+
 inf = gdb.selected_inferior()
 print("addr : ",end='')
 addr = input()
@@ -13,14 +23,14 @@ if 'is not mapped' in res:
 else:
     res = res[res.find('Containing mapping:')+20:res.find('Offset')]
     res = res.split()
-    x = -1
+    x = []
     for i in range(len(res)):
         if '0x' in res[i]:
-            x = i
-            break
+            x.append(i)
     assert x != -1
-    addr_st = int(res[x],16)
-    addr_end = int(res[x+1],16)
+    addr_st = int(cut(res[x[1]]),16)
+    addr_end = int(cut(res[x[2]]),16)
+    print(f"page: {hex(addr_st)} ~ {hex(addr_end)}")
     print("target addr start: ",end='')
     tar_st = input()
     if tar_st.startswith("0x"):
